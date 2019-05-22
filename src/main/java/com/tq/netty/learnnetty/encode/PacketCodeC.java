@@ -3,6 +3,8 @@ package com.tq.netty.learnnetty.encode;
 import com.tq.netty.learnnetty.model.packets.LoginRequestPacket;
 import com.tq.netty.learnnetty.model.packets.LoginResponsePacket;
 import com.tq.netty.learnnetty.model.Packet;
+import com.tq.netty.learnnetty.model.packets.MessageRequestPacket;
+import com.tq.netty.learnnetty.model.packets.MessageResponsePacket;
 import com.tq.netty.learnnetty.serialize.JSONSerializer;
 import com.tq.netty.learnnetty.serialize.Serializer;
 import io.netty.buffer.ByteBuf;
@@ -11,8 +13,7 @@ import io.netty.buffer.ByteBufAllocator;
 import java.util.HashMap;
 import java.util.Map;
 
-import static com.tq.netty.learnnetty.model.Command.LOGIN_REQUEST;
-import static com.tq.netty.learnnetty.model.Command.LOGIN_RESPONSE;
+import static com.tq.netty.learnnetty.model.Command.*;
 
 public class PacketCodeC {
 
@@ -25,6 +26,8 @@ public class PacketCodeC {
         packetTypeMap = new HashMap<>();
         packetTypeMap.put(LOGIN_REQUEST, LoginRequestPacket.class);
         packetTypeMap.put(LOGIN_RESPONSE, LoginResponsePacket.class);
+        packetTypeMap.put(MESSAGE_REQUEST, MessageRequestPacket.class);
+        packetTypeMap.put(MESSAGE_RESPONSE, MessageResponsePacket.class);
 
         serializerMap = new HashMap<>();
         Serializer serializer = new JSONSerializer();

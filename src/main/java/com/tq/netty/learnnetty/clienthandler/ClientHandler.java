@@ -4,6 +4,7 @@ import com.tq.netty.learnnetty.encode.PacketCodeC;
 import com.tq.netty.learnnetty.model.packets.LoginRequestPacket;
 import com.tq.netty.learnnetty.model.packets.LoginResponsePacket;
 import com.tq.netty.learnnetty.model.Packet;
+import com.tq.netty.learnnetty.model.packets.MessageResponsePacket;
 import com.tq.netty.learnnetty.util.LoginUtil;
 import io.netty.buffer.ByteBuf;
 import io.netty.channel.ChannelHandlerContext;
@@ -36,13 +37,15 @@ public class ClientHandler extends ChannelInboundHandlerAdapter {
         Packet packet=PacketCodeC.INSTANCE.decode(byteBuf);
         if(packet instanceof LoginResponsePacket){
             LoginResponsePacket loginResponsePacket=(LoginResponsePacket) packet;
-
             if(loginResponsePacket.isSuccess()){
                 LoginUtil.markAsLogin(context.channel());
                 System.out.println(new Date()+"-收到服务器校验信息---客户端登陆成功");
             }else {
                 System.out.println(new Date()+"-收到服务器校验信息---客户端登陆失败");
             }
+        }else if(packet instanceof MessageResponsePacket){
+            MessageResponsePacket messageResponsePacket=(MessageResponsePacket)packet;
+            System.out.println(new Date()+"-收到服务器的回送信息");
         }
     }
 
