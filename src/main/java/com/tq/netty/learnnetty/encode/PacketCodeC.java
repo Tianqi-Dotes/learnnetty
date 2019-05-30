@@ -9,6 +9,7 @@ import com.tq.netty.learnnetty.serialize.JSONSerializer;
 import com.tq.netty.learnnetty.serialize.Serializer;
 import io.netty.buffer.ByteBuf;
 import io.netty.buffer.ByteBufAllocator;
+import io.netty.channel.ChannelHandlerContext;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -17,7 +18,7 @@ import static com.tq.netty.learnnetty.model.Command.*;
 
 public class PacketCodeC {
 
-    private static final int MAGIC_NUMBER= 0x12345678;
+    public static final int MAGIC_NUMBER= 0x12345678;
     private static final Map<Byte, Serializer> serializerMap;
     private static final Map<Byte, Class<? extends Packet>> packetTypeMap;
 
@@ -37,6 +38,19 @@ public class PacketCodeC {
 
     public ByteBuf encode(ByteBufAllocator allocator,Packet packet){
         ByteBuf byteBuf=allocator.ioBuffer();
+
+        byte[] bytes=Serializer.DEFAULT.serialize(packet);
+
+        byteBuf.writeInt(MAGIC_NUMBER);
+        byteBuf.writeByte(packet.getVersion());
+        byteBuf.writeByte(Serializer.DEFAULT.getSerializerAlgorithm());
+        byteBuf.writeByte(packet.getCommand());
+        byteBuf.writeInt(bytes.length);
+        byteBuf.writeBytes(bytes);
+
+        return byteBuf;
+    }
+    public ByteBuf encode(ByteBuf byteBuf,Packet packet){
 
         byte[] bytes=Serializer.DEFAULT.serialize(packet);
 

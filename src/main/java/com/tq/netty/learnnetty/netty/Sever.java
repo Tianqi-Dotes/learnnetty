@@ -1,12 +1,16 @@
 package com.tq.netty.learnnetty.netty;
 
-import com.tq.netty.learnnetty.clienthandler.FirstServerHandler;
-import com.tq.netty.learnnetty.clienthandler.ServerHandler;
+import com.tq.netty.learnnetty.clienthandler.*;
+import com.tq.netty.learnnetty.encode.PacketDecoder;
+import com.tq.netty.learnnetty.encode.PacketEncoder;
+import com.tq.netty.learnnetty.encode.Spliter;
 import io.netty.bootstrap.ServerBootstrap;
 import io.netty.channel.ChannelInitializer;
+import io.netty.channel.ChannelOption;
 import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.nio.NioServerSocketChannel;
 import io.netty.channel.socket.nio.NioSocketChannel;
+import io.netty.handler.codec.LengthFieldBasedFrameDecoder;
 import io.netty.util.concurrent.Future;
 import io.netty.util.concurrent.GenericFutureListener;
 
@@ -38,10 +42,22 @@ public class Sever {
         ServerBootstrap bootstrap=new ServerBootstrap();
         bootstrap.group(bossGroup,workerGroup)
                 .channel(NioServerSocketChannel.class)
+                .option(ChannelOption.SO_BACKLOG, 1024)
+                .childOption(ChannelOption.SO_KEEPALIVE, true)
+                .childOption(ChannelOption.TCP_NODELAY, true)
                 .childHandler(new ChannelInitializer<NioSocketChannel>() {
                     @Override
                     protected void initChannel(NioSocketChannel ch) throws Exception {
-                        ch.pipeline().addLast(new ServerHandler());
+                        ch.pipeline().addLast(new Spliter());//封装的LengthFieldBasedFrameDecoder
+                        //ch.pipeline().addLast(new LifeCycleTestHandler());//处理顺序
+
+                        ch.pipeline().addLast(new PacketDecoder());
+                        ch.pipeline().addLast(new LoginRequestHandler());
+
+                        //ch.pipeline().addLast(new AuthHandler());
+                        ch.pipeline().addLast(new MessageRequestHandler());
+                        ch.pipeline().addLast(new PacketEncoder());
+
                     }
                 });
         bind(bootstrap,8081);

@@ -1,6 +1,11 @@
 package com.tq.netty.learnnetty;
 
+import com.tq.netty.learnnetty.clienthandler.TestInBoundHandler;
+import io.netty.bootstrap.ServerBootstrap;
 import io.netty.buffer.ByteBuf;
+import io.netty.channel.ChannelInitializer;
+import io.netty.channel.nio.NioEventLoopGroup;
+import io.netty.channel.socket.nio.NioSocketChannel;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -12,6 +17,22 @@ public class LearnnettyApplicationTests {
 
 	@Test
 	public void contextLoads() {
+
+		NioEventLoopGroup worker=new NioEventLoopGroup();
+		NioEventLoopGroup boss=new NioEventLoopGroup();
+
+		ServerBootstrap bootstrap=new ServerBootstrap();
+
+		bootstrap.childHandler(new ChannelInitializer<NioSocketChannel>() {
+
+			@Override
+			protected void initChannel(NioSocketChannel ch) throws Exception {
+				ch.pipeline().addLast(new TestInBoundHandler.InBoundHandlerA());
+				ch.pipeline().addLast(new TestInBoundHandler.InBoundHandlerB());
+				ch.pipeline().addLast(new TestInBoundHandler.InBoundHandlerC());
+
+			}
+		}).bind(8081);
 
 		/*Serializer serializer = new JSONSerializer();
 		LoginRequestPacket loginRequestPacket = new LoginRequestPacket();

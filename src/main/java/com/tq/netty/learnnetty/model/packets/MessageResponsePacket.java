@@ -8,6 +8,8 @@ import lombok.Data;
 public class MessageResponsePacket extends Packet {
 
     private String msg;
+    private String fromUserId;
+    private String fromUserName;
 
     @Override
     public Byte getCommand() {

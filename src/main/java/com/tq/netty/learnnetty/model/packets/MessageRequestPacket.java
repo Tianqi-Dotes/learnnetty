@@ -8,9 +8,16 @@ import lombok.Data;
 public class MessageRequestPacket extends Packet {
 
     private String msg;
+    private String toUserId;
+
 
     @Override
     public Byte getCommand() {
         return Command.MESSAGE_REQUEST;
+    }
+
+    public MessageRequestPacket(String toUserId,String msg){
+        this.toUserId=toUserId;
+        this.msg=msg;
     }
 }
