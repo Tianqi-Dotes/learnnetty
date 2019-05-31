@@ -5,6 +5,8 @@ import com.tq.netty.learnnetty.model.packets.LoginResponsePacket;
 import com.tq.netty.learnnetty.model.Packet;
 import com.tq.netty.learnnetty.model.packets.MessageRequestPacket;
 import com.tq.netty.learnnetty.model.packets.MessageResponsePacket;
+import com.tq.netty.learnnetty.model.packets.grouppackets.CreateGroupRequestPacket;
+import com.tq.netty.learnnetty.model.packets.grouppackets.CreateGroupResponsePacket;
 import com.tq.netty.learnnetty.serialize.JSONSerializer;
 import com.tq.netty.learnnetty.serialize.Serializer;
 import io.netty.buffer.ByteBuf;
@@ -29,6 +31,9 @@ public class PacketCodeC {
         packetTypeMap.put(LOGIN_RESPONSE, LoginResponsePacket.class);
         packetTypeMap.put(MESSAGE_REQUEST, MessageRequestPacket.class);
         packetTypeMap.put(MESSAGE_RESPONSE, MessageResponsePacket.class);
+
+        packetTypeMap.put(GROUP_CREATE_REQUEST, CreateGroupRequestPacket.class);
+        packetTypeMap.put(GROUP_CREATE_RESPONSE, CreateGroupResponsePacket.class);
 
         serializerMap = new HashMap<>();
         Serializer serializer = new JSONSerializer();

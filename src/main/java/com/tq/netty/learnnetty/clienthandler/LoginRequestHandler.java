@@ -22,7 +22,7 @@ public class LoginRequestHandler extends SimpleChannelInboundHandler<LoginReques
         LoginResponsePacket packet=login(requestPacket);
         //ByteBuf response= PacketCodeC.INSTANCE.encode(ctx.alloc(),packet);
 
-        String userId= UUID.randomUUID().toString();
+        String userId= UUID.randomUUID().toString().substring(0,8);
         System.out.println("your userid is : "+userId);
         packet.setUserId(userId);
         packet.setUserName(requestPacket.getUsername());

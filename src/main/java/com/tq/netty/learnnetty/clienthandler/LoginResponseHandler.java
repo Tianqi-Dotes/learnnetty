@@ -34,7 +34,7 @@ public class LoginResponseHandler extends SimpleChannelInboundHandler<LoginRespo
 
         if(msg.isSuccess()){
             System.out.println("客户端收到服务器消息=----登陆成功");
-
+            System.out.println("your user id is "+msg.getUserId());
 
             SessionUtil.bindSession(new Session(msg.getUserId(),msg.getUserName()),ctx.channel());
 
