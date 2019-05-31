@@ -1,4 +1,4 @@
-package com.tq.netty.learnnetty.clienthandler;
+package com.tq.netty.learnnetty.clienthandler.group;
 
 import com.tq.netty.learnnetty.model.packets.grouppackets.CreateGroupRequestPacket;
 import com.tq.netty.learnnetty.model.packets.grouppackets.CreateGroupResponsePacket;
@@ -33,12 +33,16 @@ public class CreateGroupRequestHandler extends SimpleChannelInboundHandler<Creat
 
         CreateGroupResponsePacket packet=new CreateGroupResponsePacket();
         packet.setSuccess(true);
-        packet.setGroupId(UUID.randomUUID().toString().substring(0,8));
+        String groupId=UUID.randomUUID().toString().substring(0,8);
+        packet.setGroupId(groupId);
         packet.setUserNameList(userNameList);
 
-        channelGroup.writeAndFlush(packet);
-
-        System.out.println("group create successfully! id is "+packet.getGroupId());
+        System.out.println("group create successfully! group id is "+groupId);
         System.out.println("members in the group is :"+userNameList);
+
+
+        SessionUtil.setChannelGroupById(groupId,channelGroup);
+        channelGroup.writeAndFlush(packet);//次数 group 设定了发给哪个客户端
+
     }
 }

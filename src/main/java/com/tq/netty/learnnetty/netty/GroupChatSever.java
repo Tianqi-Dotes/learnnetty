@@ -1,9 +1,10 @@
 package com.tq.netty.learnnetty.netty;
 
-import com.tq.netty.learnnetty.clienthandler.CreateGroupRequestHandler;
-import com.tq.netty.learnnetty.clienthandler.CreateGroupResponseHandler;
-import com.tq.netty.learnnetty.clienthandler.LoginRequestHandler;
-import com.tq.netty.learnnetty.clienthandler.MessageRequestHandler;
+import com.tq.netty.learnnetty.clienthandler.*;
+import com.tq.netty.learnnetty.clienthandler.group.CheckGroupMembersRequestHandler;
+import com.tq.netty.learnnetty.clienthandler.group.CreateGroupRequestHandler;
+import com.tq.netty.learnnetty.clienthandler.group.JoinGroupRequestHandler;
+import com.tq.netty.learnnetty.clienthandler.group.LeaveGroupRequestHandler;
 import com.tq.netty.learnnetty.encode.PacketDecoder;
 import com.tq.netty.learnnetty.encode.PacketEncoder;
 import com.tq.netty.learnnetty.encode.Spliter;
@@ -59,7 +60,10 @@ public class GroupChatSever {
                         //ch.pipeline().addLast(new AuthHandler());
                         ch.pipeline().addLast(new MessageRequestHandler());
                         ch.pipeline().addLast(new CreateGroupRequestHandler());
+                        ch.pipeline().addLast(new JoinGroupRequestHandler());
 
+                        ch.pipeline().addLast(new CheckGroupMembersRequestHandler());
+                        ch.pipeline().addLast(new LeaveGroupRequestHandler());
 
                         ch.pipeline().addLast(new PacketEncoder());
 

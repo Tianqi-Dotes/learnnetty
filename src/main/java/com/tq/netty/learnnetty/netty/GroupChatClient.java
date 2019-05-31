@@ -1,16 +1,16 @@
 package com.tq.netty.learnnetty.netty;
 
-import com.tq.netty.learnnetty.clienthandler.CreateGroupRequestHandler;
-import com.tq.netty.learnnetty.clienthandler.CreateGroupResponseHandler;
+import com.tq.netty.learnnetty.clienthandler.group.CheckGroupMembersResponseHandler;
+import com.tq.netty.learnnetty.clienthandler.group.CreateGroupResponseHandler;
 import com.tq.netty.learnnetty.clienthandler.LoginResponseHandler;
 import com.tq.netty.learnnetty.clienthandler.MessageResponseHandler;
+import com.tq.netty.learnnetty.clienthandler.group.JoinGroupResponseHandler;
+import com.tq.netty.learnnetty.clienthandler.group.LeaveGroupResponseHandler;
 import com.tq.netty.learnnetty.encode.PacketDecoder;
 import com.tq.netty.learnnetty.encode.PacketEncoder;
 import com.tq.netty.learnnetty.encode.Spliter;
 import com.tq.netty.learnnetty.model.groupcommands.ConsoleCommandManager;
 import com.tq.netty.learnnetty.model.groupcommands.LoginConsoleCommand;
-import com.tq.netty.learnnetty.model.packets.LoginRequestPacket;
-import com.tq.netty.learnnetty.model.packets.MessageRequestPacket;
 import com.tq.netty.learnnetty.util.SessionUtil;
 import io.netty.bootstrap.Bootstrap;
 import io.netty.channel.Channel;
@@ -19,7 +19,6 @@ import io.netty.channel.ChannelInitializer;
 import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.SocketChannel;
 import io.netty.channel.socket.nio.NioSocketChannel;
-import sun.rmi.runtime.Log;
 
 import java.util.Scanner;
 import java.util.concurrent.TimeUnit;
@@ -42,6 +41,9 @@ public class GroupChatClient {
                         ch.pipeline().addLast(new MessageResponseHandler());
 
                         ch.pipeline().addLast(new CreateGroupResponseHandler());
+                        ch.pipeline().addLast(new JoinGroupResponseHandler());
+                        ch.pipeline().addLast(new CheckGroupMembersResponseHandler());
+                        ch.pipeline().addLast(new LeaveGroupResponseHandler());
 
                         ch.pipeline().addLast(new PacketEncoder());
                     }

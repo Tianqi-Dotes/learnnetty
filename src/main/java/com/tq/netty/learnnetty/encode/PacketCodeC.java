@@ -1,12 +1,12 @@
 package com.tq.netty.learnnetty.encode;
 
+import com.tq.netty.learnnetty.clienthandler.group.CheckGroupMembersRequestHandler;
 import com.tq.netty.learnnetty.model.packets.LoginRequestPacket;
 import com.tq.netty.learnnetty.model.packets.LoginResponsePacket;
 import com.tq.netty.learnnetty.model.Packet;
 import com.tq.netty.learnnetty.model.packets.MessageRequestPacket;
 import com.tq.netty.learnnetty.model.packets.MessageResponsePacket;
-import com.tq.netty.learnnetty.model.packets.grouppackets.CreateGroupRequestPacket;
-import com.tq.netty.learnnetty.model.packets.grouppackets.CreateGroupResponsePacket;
+import com.tq.netty.learnnetty.model.packets.grouppackets.*;
 import com.tq.netty.learnnetty.serialize.JSONSerializer;
 import com.tq.netty.learnnetty.serialize.Serializer;
 import io.netty.buffer.ByteBuf;
@@ -34,6 +34,17 @@ public class PacketCodeC {
 
         packetTypeMap.put(GROUP_CREATE_REQUEST, CreateGroupRequestPacket.class);
         packetTypeMap.put(GROUP_CREATE_RESPONSE, CreateGroupResponsePacket.class);
+
+        packetTypeMap.put(JOIN_GROUP_REQUEST, JoinGroupRequestPacket.class);
+        packetTypeMap.put(JOIN_GROUP_RESPONSE, JoinGroupResponsePacket.class);
+
+        packetTypeMap.put(LEAVE_GROUP_REQUEST, LeaveGroupRequestPacket.class);
+        packetTypeMap.put(LEAVE_GROUP_RESPONSE, LeaveGroupResponsePacket.class);
+
+
+        packetTypeMap.put(CHECK_GROUP_MEMBERS_REQ, CheckGroupMembersRequestPacket.class);
+        packetTypeMap.put(CHECK_GROUP_MEMBERS_RES, CheckGroupMembersResponsePacket.class);
+
 
         serializerMap = new HashMap<>();
         Serializer serializer = new JSONSerializer();

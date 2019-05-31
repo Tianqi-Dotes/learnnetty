@@ -1,4 +1,4 @@
-package com.tq.netty.learnnetty.clienthandler;
+package com.tq.netty.learnnetty.clienthandler.group;
 
 import com.tq.netty.learnnetty.model.packets.grouppackets.CreateGroupResponsePacket;
 import io.netty.channel.ChannelHandlerContext;
@@ -10,8 +10,13 @@ public class CreateGroupResponseHandler extends SimpleChannelInboundHandler<Crea
 
     @Override
     protected void channelRead0(ChannelHandlerContext ctx, CreateGroupResponsePacket msg) throws Exception {
-        System.out.println("client recieved success group create msg, group id is"+msg.getGroupId());
+        if(msg.isSuccess()) {
+            System.out.println("client recieved success group create msg, group id is " + msg.getGroupId());
 
-        System.out.println("client receive group member msg from server, memebers: " +msg.getUserNameList());
+            System.out.println("client receive group member msg from server, memebers: " + msg.getUserNameList());
+        }else{
+
+            System.out.println("create group failed");
+        }
     }
 }

@@ -4,6 +4,7 @@ import com.tq.netty.learnnetty.Session;
 import com.tq.netty.learnnetty.attributes.Attributes;
 import io.netty.channel.Channel;
 import io.netty.channel.ChannelHandlerContext;
+import io.netty.channel.group.ChannelGroup;
 
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
@@ -11,7 +12,7 @@ import java.util.concurrent.ConcurrentHashMap;
 public class SessionUtil {
 
     private static final Map<String, Channel> sessionMap=new ConcurrentHashMap();
-
+    private static final Map<String, ChannelGroup> groupIdChannelGroupMap = new ConcurrentHashMap<>();
 
     public static void bindSession(Session session,Channel channel){
         sessionMap.put(session.getUserId(),channel);
@@ -24,6 +25,14 @@ public class SessionUtil {
             channel.attr(Attributes.SESSION).set(null);
 
         }
+    }
+
+    public static ChannelGroup getChannelGroupByGroupId(String groupId){
+        return groupIdChannelGroupMap.get(groupId);
+    }
+
+    public static void setChannelGroupById(String groupId,ChannelGroup channels){
+        groupIdChannelGroupMap.put(groupId,channels);
     }
 
     public static boolean hasLogin(Channel channel){
