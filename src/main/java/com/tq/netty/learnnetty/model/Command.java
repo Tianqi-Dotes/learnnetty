@@ -25,4 +25,5 @@ public interface Command {
     Byte LOGOUT_REQ=15;
     Byte LOGOUT_RES=16;
 
+    Byte HEART_BEATS=17;
 }

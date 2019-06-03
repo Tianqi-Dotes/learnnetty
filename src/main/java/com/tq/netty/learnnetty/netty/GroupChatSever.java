@@ -3,6 +3,8 @@ package com.tq.netty.learnnetty.netty;
 import com.tq.netty.learnnetty.clienthandler.*;
 import com.tq.netty.learnnetty.clienthandler.encode_decode.PacketCodecHandler;
 import com.tq.netty.learnnetty.clienthandler.group.*;
+import com.tq.netty.learnnetty.clienthandler.idle.HeartBeatsRequestHandler;
+import com.tq.netty.learnnetty.clienthandler.idle.IdleTestHandler;
 import com.tq.netty.learnnetty.encode.PacketDecoder;
 import com.tq.netty.learnnetty.encode.PacketEncoder;
 import com.tq.netty.learnnetty.encode.Spliter;
@@ -49,12 +51,16 @@ public class GroupChatSever {
                 .childHandler(new ChannelInitializer<NioSocketChannel>() {
                     @Override
                     protected void initChannel(NioSocketChannel ch) throws Exception {
+                        ch.pipeline().addLast(new IdleTestHandler());
                         ch.pipeline().addLast(new Spliter());//封装的LengthFieldBasedFrameDecoder
                         //ch.pipeline().addLast(new LifeCycleTestHandler());//处理顺序
 
                         ch.pipeline().addLast(PacketCodecHandler.singleton);
                         //ch.pipeline().addLast(new PacketDecoder());
                         ch.pipeline().addLast(LoginRequestHandler.singleton); //单例
+
+                        ch.pipeline().addLast(HeartBeatsRequestHandler.singleton); //单例 回复客户端心跳
+
                         ch.pipeline().addLast(ParallelHandlers.singleton); //单例 总和
 
                         //ch.pipeline().addLast(new AuthHandler());

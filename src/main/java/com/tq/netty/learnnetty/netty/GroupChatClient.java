@@ -1,8 +1,11 @@
 package com.tq.netty.learnnetty.netty;
 
+import com.tq.netty.learnnetty.clienthandler.encode_decode.PacketCodecHandler;
 import com.tq.netty.learnnetty.clienthandler.group.*;
 import com.tq.netty.learnnetty.clienthandler.LoginResponseHandler;
 import com.tq.netty.learnnetty.clienthandler.MessageResponseHandler;
+import com.tq.netty.learnnetty.clienthandler.idle.ClientHeartBeatsHandler;
+import com.tq.netty.learnnetty.clienthandler.idle.IdleTestHandler;
 import com.tq.netty.learnnetty.encode.PacketDecoder;
 import com.tq.netty.learnnetty.encode.PacketEncoder;
 import com.tq.netty.learnnetty.encode.Spliter;
@@ -32,8 +35,10 @@ public class GroupChatClient {
                 .handler(new ChannelInitializer<SocketChannel>() {
                     @Override
                     protected void initChannel(SocketChannel ch) throws Exception {
+                        ch.pipeline().addLast(new IdleTestHandler());
                         ch.pipeline().addLast(new Spliter());
-                        ch.pipeline().addLast(new PacketDecoder());
+                        ch.pipeline().addLast(PacketCodecHandler.singleton);
+                       // ch.pipeline().addLast(new PacketDecoder());
                         ch.pipeline().addLast(new LoginResponseHandler());
                         ch.pipeline().addLast(new MessageResponseHandler());
 
@@ -44,7 +49,8 @@ public class GroupChatClient {
                         ch.pipeline().addLast(new SendMsgResponseHandler());
 
 
-                        ch.pipeline().addLast(new PacketEncoder());
+                        //ch.pipeline().addLast(new PacketEncoder());
+                        ch.pipeline().addLast(new ClientHeartBeatsHandler());
                     }
                 });
         connect(bootstrap,"127.0.0.1",8081,MAX_RETRY);
