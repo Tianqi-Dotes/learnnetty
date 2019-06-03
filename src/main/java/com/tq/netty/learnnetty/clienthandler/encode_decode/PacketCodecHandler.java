@@ -21,6 +21,7 @@ public class PacketCodecHandler extends MessageToMessageCodec<ByteBuf, Packet> {
         ByteBuf buf= ctx.alloc().ioBuffer();
         PacketCodeC.INSTANCE.encode(buf,msg);
         out.add(buf);
+
     }
 
     @Override
