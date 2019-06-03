@@ -1,11 +1,8 @@
 package com.tq.netty.learnnetty.netty;
 
-import com.tq.netty.learnnetty.clienthandler.group.CheckGroupMembersResponseHandler;
-import com.tq.netty.learnnetty.clienthandler.group.CreateGroupResponseHandler;
+import com.tq.netty.learnnetty.clienthandler.group.*;
 import com.tq.netty.learnnetty.clienthandler.LoginResponseHandler;
 import com.tq.netty.learnnetty.clienthandler.MessageResponseHandler;
-import com.tq.netty.learnnetty.clienthandler.group.JoinGroupResponseHandler;
-import com.tq.netty.learnnetty.clienthandler.group.LeaveGroupResponseHandler;
 import com.tq.netty.learnnetty.encode.PacketDecoder;
 import com.tq.netty.learnnetty.encode.PacketEncoder;
 import com.tq.netty.learnnetty.encode.Spliter;
@@ -44,6 +41,8 @@ public class GroupChatClient {
                         ch.pipeline().addLast(new JoinGroupResponseHandler());
                         ch.pipeline().addLast(new CheckGroupMembersResponseHandler());
                         ch.pipeline().addLast(new LeaveGroupResponseHandler());
+                        ch.pipeline().addLast(new SendMsgResponseHandler());
+
 
                         ch.pipeline().addLast(new PacketEncoder());
                     }

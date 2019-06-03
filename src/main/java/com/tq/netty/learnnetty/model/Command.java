@@ -19,5 +19,10 @@ public interface Command {
     Byte CHECK_GROUP_MEMBERS_REQ=11;
     Byte CHECK_GROUP_MEMBERS_RES=12;
 
+    Byte SEND_MSG_REQ=13;
+    Byte SEND_MSG_RES=14;
+
+    Byte LOGOUT_REQ=15;
+    Byte LOGOUT_RES=16;
 
 }

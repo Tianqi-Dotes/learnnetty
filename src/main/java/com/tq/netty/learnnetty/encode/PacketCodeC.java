@@ -1,6 +1,7 @@
 package com.tq.netty.learnnetty.encode;
 
 import com.tq.netty.learnnetty.clienthandler.group.CheckGroupMembersRequestHandler;
+import com.tq.netty.learnnetty.clienthandler.group.SendMsgRequestHandler;
 import com.tq.netty.learnnetty.model.packets.LoginRequestPacket;
 import com.tq.netty.learnnetty.model.packets.LoginResponsePacket;
 import com.tq.netty.learnnetty.model.Packet;
@@ -44,6 +45,9 @@ public class PacketCodeC {
 
         packetTypeMap.put(CHECK_GROUP_MEMBERS_REQ, CheckGroupMembersRequestPacket.class);
         packetTypeMap.put(CHECK_GROUP_MEMBERS_RES, CheckGroupMembersResponsePacket.class);
+
+        packetTypeMap.put(SEND_MSG_REQ, SendMsgRequestPacket.class);
+        packetTypeMap.put(SEND_MSG_RES, SendMsgResponsePacket.class);
 
 
         serializerMap = new HashMap<>();

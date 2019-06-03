@@ -20,6 +20,8 @@ public class ConsoleCommandManager implements ConsoleCommand {
         consoleCommandMap.put("leaveGroup", new LeaveGroupCommand());
 
         consoleCommandMap.put("checkGroup", new GroupStatusCommand());
+        consoleCommandMap.put("sendMsg", new SendMsgCommand());
+
     }
 
     @Override

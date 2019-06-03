@@ -7,13 +7,17 @@ import com.tq.netty.learnnetty.model.packets.LoginResponsePacket;
 import com.tq.netty.learnnetty.util.LoginUtil;
 import com.tq.netty.learnnetty.util.SessionUtil;
 import io.netty.buffer.ByteBuf;
+import io.netty.channel.ChannelHandler;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.SimpleChannelInboundHandler;
 
 import java.util.Date;
 import java.util.UUID;
 
+@ChannelHandler.Sharable
 public class LoginRequestHandler extends SimpleChannelInboundHandler<LoginRequestPacket> {
+
+    public static final LoginRequestHandler singleton=new LoginRequestHandler();
 
     @Override
     protected void channelRead0(ChannelHandlerContext ctx, LoginRequestPacket requestPacket) throws Exception {

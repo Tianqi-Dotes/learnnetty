@@ -4,6 +4,7 @@ import com.tq.netty.learnnetty.model.packets.grouppackets.CheckGroupMembersReque
 import com.tq.netty.learnnetty.model.packets.grouppackets.CheckGroupMembersResponsePacket;
 import com.tq.netty.learnnetty.util.SessionUtil;
 import io.netty.channel.Channel;
+import io.netty.channel.ChannelHandler;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.SimpleChannelInboundHandler;
 import io.netty.channel.group.ChannelGroup;
@@ -11,7 +12,10 @@ import io.netty.channel.group.ChannelGroup;
 import java.util.ArrayList;
 import java.util.List;
 
+@ChannelHandler.Sharable
 public class CheckGroupMembersRequestHandler extends SimpleChannelInboundHandler<CheckGroupMembersRequestPacket> {
+
+    public static final CheckGroupMembersRequestHandler singleton=new CheckGroupMembersRequestHandler();
     @Override
     protected void channelRead0(ChannelHandlerContext ctx, CheckGroupMembersRequestPacket msg) throws Exception {
 
