@@ -1,16 +1,11 @@
 package com.tq.netty.netty2.server;
 
-import com.tq.netty.netty2.handler.CustomHandler;
 import com.tq.netty.netty2.initial.ServerInitializer;
 import io.netty.bootstrap.ServerBootstrap;
 import io.netty.channel.ChannelFuture;
-import io.netty.channel.ChannelInitializer;
 import io.netty.channel.EventLoopGroup;
 import io.netty.channel.nio.NioEventLoopGroup;
-import io.netty.channel.socket.SocketChannel;
 import io.netty.channel.socket.nio.NioServerSocketChannel;
-import io.netty.handler.codec.http.HttpClientCodec;
-import io.netty.handler.codec.http.HttpServerCodec;
 import io.netty.util.concurrent.Future;
 import io.netty.util.concurrent.GenericFutureListener;
 
@@ -33,11 +28,13 @@ public class Server {
                         }
                     });
 */
-            //ChannelFuture future= bootstrap.bind(8444);
+            ChannelFuture future= bootstrap.bind(8444).sync();
+
+            future.channel().closeFuture().sync();
+            //ChannelFuture future = bootstrap.bind(8088).sync();
 
             //future.channel().closeFuture().sync();
-
-            bind(bootstrap,8844);
+            //bind(bootstrap,8844);
         }finally {
             boss.shutdownGracefully();
             worker.shutdownGracefully();
